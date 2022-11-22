@@ -1,6 +1,6 @@
 # vuetify3-vite-template
 
-A simple but complete template for Vuetify app development.
+a simple but complete template for Vuetify app development.
 
 ## Features
 
@@ -12,10 +12,19 @@ A simple but complete template for Vuetify app development.
 - Pinia
 - Prettier
 - MockJS
+- Electron (optional)
 
 ## Quick Start
+
+serve web app:
 
 ```bash
 yarn install
 yarn dev
+```
+
+serve electron and load web app:
+
+```bash
+yarn e  # must be run after `yarn dev`
 ```

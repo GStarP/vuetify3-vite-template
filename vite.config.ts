@@ -7,9 +7,11 @@ import { viteMockServe } from 'vite-plugin-mock';
 import { ConfigEnv, defineConfig } from 'vite';
 import { fileURLToPath, URL } from 'node:url';
 
+import DevConfig from './configs/dev-config.json';
+
 // https://vitejs.dev/config/
-export default ({ mode }: ConfigEnv) => {
-  console.log(`mode: ${mode}`);
+export default ({ command }: ConfigEnv) => {
+  const isDev = command === 'serve';
 
   return defineConfig({
     plugins: [
@@ -20,18 +22,18 @@ export default ({ mode }: ConfigEnv) => {
       }),
       viteMockServe({
         mockPath: 'mock',
-        localEnabled: mode === 'development'
+        localEnabled: isDev
       })
     ],
-    define: { 'process.env': {} },
     resolve: {
       alias: {
-        '@': fileURLToPath(new URL('./src', import.meta.url))
+        '@': fileURLToPath(new URL('./app', import.meta.url))
       },
       extensions: ['.js', '.json', '.jsx', '.mjs', '.ts', '.tsx', '.vue']
     },
     server: {
-      port: 3000,
+      host: '0.0.0.0',
+      port: DevConfig.DEV_SERVER_PORT,
       open: true
     }
   });
