@@ -9,6 +9,8 @@
 
       <div v-if="!users.length">loading...</div>
       <div v-for="u of users">{{ u.uname }}[{{ u.uid }}]</div>
+
+      <v-btn @click="() => openStats()">Open Stats</v-btn>
     </v-main>
   </v-app>
 </template>
@@ -18,6 +20,7 @@ import { useRouter } from 'vue-router';
 import { useCounterStore } from '@/store/counter';
 import { onMounted, Ref, ref } from 'vue';
 import axios from 'axios';
+import { isElectron } from '@/utils/common';
 
 const router = useRouter();
 function to(path: string) {
@@ -40,4 +43,12 @@ onMounted(() => {
     })
     .catch((err) => console.error(err));
 });
+
+function openStats() {
+  if (!isElectron()) {
+    console.warn('not in electron');
+    return;
+  }
+  window.ELECTRON_API?.openStats();
+}
 </script>
